@@ -43,6 +43,17 @@ export interface AgentNode {
   outputs: AgentOutput[];
   suggestedTools?: string[];
   notes?: string[];
+  // Non-technical user-friendly fields
+  businessOutcome?: string;      // What this achieves in plain English
+  analogy?: string;              // Real-world comparison
+  estimatedTime?: string;        // How long it takes (e.g., "~2 seconds", "1-2 business days")
+  isManual?: boolean;            // True if requires human intervention
+  failureAction?: string;        // What happens if this step fails
+  owner?: string;                // Team/role responsible
+  exampleInput?: string;         // Sample input preview
+  exampleOutput?: string;        // Sample output preview
+  costPerRun?: string;           // Cost estimate (e.g., "$0.002", "Free")
+  questionAnswered?: string;     // Business question this step answers
 }
 
 export interface EdgeSpec {
@@ -108,6 +119,17 @@ export const ZAgentNode = z.object({
   outputs: z.array(ZAgentOutput).default([]),
   suggestedTools: z.array(z.string()).optional(),
   notes: z.array(z.string()).optional(),
+  // Non-technical user-friendly fields
+  businessOutcome: z.string().optional(),
+  analogy: z.string().optional(),
+  estimatedTime: z.string().optional(),
+  isManual: z.boolean().optional(),
+  failureAction: z.string().optional(),
+  owner: z.string().optional(),
+  exampleInput: z.string().optional(),
+  exampleOutput: z.string().optional(),
+  costPerRun: z.string().optional(),
+  questionAnswered: z.string().optional(),
 });
 
 export const ZEdgeSpec = z.object({

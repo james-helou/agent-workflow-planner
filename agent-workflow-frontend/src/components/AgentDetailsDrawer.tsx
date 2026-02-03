@@ -20,9 +20,10 @@ import {
   useColorModeValue,
   Wrap,
   WrapItem,
+  HStack,
 } from '@chakra-ui/react';
 import { CloseIcon } from '@chakra-ui/icons';
-import { MdInput, MdOutput, MdBuild, MdNotes, MdInfo } from 'react-icons/md';
+import { MdInput, MdOutput, MdBuild, MdNotes, MdInfo, MdAccessTime, MdPerson, MdAttachMoney, MdHelpOutline, MdWarning, MdLightbulb, MdCompareArrows } from 'react-icons/md';
 import type { AgentNode } from '@/lib/types';
 import { AGENT_TYPE_COLORS, AGENT_TYPE_ICONS, AGENT_TYPE_COLOR_SCHEMES } from '@/theme';
 
@@ -86,6 +87,144 @@ export function AgentDetailsDrawer({ agent, onClose }: AgentDetailsDrawerProps) 
             {agent.summary}
           </Text>
         </Box>
+
+        {/* Business Outcome - Why this matters */}
+        {agent.businessOutcome && (
+          <>
+            <Divider />
+            <Box>
+              <Flex align="center" gap={2} mb={2}>
+                <MdLightbulb color="#D69E2E" />
+                <Heading size="sm">Why this matters</Heading>
+              </Flex>
+              <Text fontSize="sm" color="gray.600">
+                {agent.businessOutcome}
+              </Text>
+            </Box>
+          </>
+        )}
+
+        {/* Analogy - Think of it like */}
+        {agent.analogy && (
+          <>
+            <Divider />
+            <Box>
+              <Flex align="center" gap={2} mb={2}>
+                <MdCompareArrows color="#805AD5" />
+                <Heading size="sm">Think of it like...</Heading>
+              </Flex>
+              <Text fontSize="sm" color="gray.600" fontStyle="italic">
+                "{agent.analogy}"
+              </Text>
+            </Box>
+          </>
+        )}
+
+        {/* Question Answered */}
+        {agent.questionAnswered && (
+          <>
+            <Divider />
+            <Box>
+              <Flex align="center" gap={2} mb={2}>
+                <MdHelpOutline color="#3182CE" />
+                <Heading size="sm">Question answered</Heading>
+              </Flex>
+              <Text fontSize="sm" color="gray.600">
+                {agent.questionAnswered}
+              </Text>
+            </Box>
+          </>
+        )}
+
+        {/* Quick Stats Row */}
+        <Divider />
+        <Box>
+          <Heading size="sm" mb={3}>At a glance</Heading>
+          <VStack spacing={2} align="stretch">
+            {/* Manual vs Automated */}
+            <HStack justify="space-between">
+              <Text fontSize="sm" color="gray.500">Execution</Text>
+              <Badge colorScheme={agent.isManual ? 'orange' : 'green'}>
+                {agent.isManual ? 'Manual (Human Required)' : 'Automated'}
+              </Badge>
+            </HStack>
+            
+            {/* Estimated Time */}
+            {agent.estimatedTime && (
+              <HStack justify="space-between">
+                <Flex align="center" gap={1}>
+                  <MdAccessTime color="#718096" size={14} />
+                  <Text fontSize="sm" color="gray.500">Time</Text>
+                </Flex>
+                <Text fontSize="sm" fontWeight="medium">{agent.estimatedTime}</Text>
+              </HStack>
+            )}
+            
+            {/* Cost */}
+            {agent.costPerRun && (
+              <HStack justify="space-between">
+                <Flex align="center" gap={1}>
+                  <MdAttachMoney color="#718096" size={14} />
+                  <Text fontSize="sm" color="gray.500">Cost per run</Text>
+                </Flex>
+                <Text fontSize="sm" fontWeight="medium">{agent.costPerRun}</Text>
+              </HStack>
+            )}
+            
+            {/* Owner */}
+            {agent.owner && (
+              <HStack justify="space-between">
+                <Flex align="center" gap={1}>
+                  <MdPerson color="#718096" size={14} />
+                  <Text fontSize="sm" color="gray.500">Owner</Text>
+                </Flex>
+                <Text fontSize="sm" fontWeight="medium">{agent.owner}</Text>
+              </HStack>
+            )}
+          </VStack>
+        </Box>
+
+        {/* If this fails */}
+        {agent.failureAction && (
+          <>
+            <Divider />
+            <Box>
+              <Flex align="center" gap={2} mb={2}>
+                <MdWarning color="#E53E3E" />
+                <Heading size="sm">If this fails</Heading>
+              </Flex>
+              <Text fontSize="sm" color="gray.600">
+                {agent.failureAction}
+              </Text>
+            </Box>
+          </>
+        )}
+
+        {/* Example Input/Output */}
+        {(agent.exampleInput || agent.exampleOutput) && (
+          <>
+            <Divider />
+            <Box>
+              <Heading size="sm" mb={2}>Example</Heading>
+              {agent.exampleInput && (
+                <Box mb={2}>
+                  <Text fontSize="xs" fontWeight="bold" color="blue.600" mb={1}>Sample Input:</Text>
+                  <Text fontSize="xs" color="gray.600" bg="gray.50" p={2} borderRadius="md" fontFamily="mono">
+                    {agent.exampleInput}
+                  </Text>
+                </Box>
+              )}
+              {agent.exampleOutput && (
+                <Box>
+                  <Text fontSize="xs" fontWeight="bold" color="green.600" mb={1}>Sample Output:</Text>
+                  <Text fontSize="xs" color="gray.600" bg="gray.50" p={2} borderRadius="md" fontFamily="mono">
+                    {agent.exampleOutput}
+                  </Text>
+                </Box>
+              )}
+            </Box>
+          </>
+        )}
 
         <Divider />
 

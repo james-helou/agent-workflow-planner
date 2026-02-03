@@ -16,7 +16,7 @@ interface AgentNodeData extends AgentNodeType {
 }
 
 function AgentNodeComponent({ data, selected }: NodeProps<AgentNodeData>) {
-  const { name, type, summary, color } = data;
+  const { name, type, summary, color, isManual, estimatedTime, owner } = data;
   const icon = AGENT_TYPE_ICONS[type];
   const colorScheme = AGENT_TYPE_COLOR_SCHEMES[type];
 
@@ -42,7 +42,7 @@ function AgentNodeComponent({ data, selected }: NodeProps<AgentNodeData>) {
         borderColor={selected ? color : 'gray.200'}
         borderRadius="lg"
         p={3}
-        w="240px"
+        w="260px"
         boxShadow={selected ? 'lg' : 'md'}
         transition="all 0.15s ease-in-out"
         _hover={{ borderColor: color, boxShadow: 'lg' }}
@@ -80,6 +80,32 @@ function AgentNodeComponent({ data, selected }: NodeProps<AgentNodeData>) {
             {summary}
           </Text>
         </Tooltip>
+
+        {/* Quick info bar */}
+        <Flex mt={2} pt={2} borderTop="1px" borderColor="gray.100" gap={2} flexWrap="wrap">
+          {/* Manual vs Automated indicator */}
+          <Badge
+            colorScheme={isManual ? 'orange' : 'green'}
+            variant="outline"
+            fontSize="10px"
+          >
+            {isManual ? 'Manual' : 'Automated'}
+          </Badge>
+          
+          {/* Estimated time */}
+          {estimatedTime && (
+            <Badge colorScheme="gray" variant="outline" fontSize="10px">
+              {estimatedTime}
+            </Badge>
+          )}
+          
+          {/* Owner/team */}
+          {owner && (
+            <Badge colorScheme="purple" variant="outline" fontSize="10px">
+              {owner}
+            </Badge>
+          )}
+        </Flex>
       </Box>
 
       {/* Output handle */}
